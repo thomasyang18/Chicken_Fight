@@ -13,14 +13,28 @@ public class PlayerStats : MonoBehaviour
     private Transform trans;
     private float reloadTime;
     public float reloadDelay = 1f;
-    public Rigidbody2D egg;
+    public GameObject eggPrefab;
     public Transform eggSpawn;
 
     public int player;
     private string[] axes = {"HorizontalP" , "VerticalP" , "FireP" }; // 0 is horizontal, 1 is vertical, 2 is fire.
     public float maxSpeed = 10f;
     public AudioSource eggShot;
-    
+
+    public float ammoTime = 2f;
+    private int ammoLimit = 5;
+    private int maxHealth = 5;
+    private int curHealth;
+    private float ammoDelay;
+    private int curAmmoCount;
+
+    public GameObject playerHealth;
+    public GameObject playerAmmo;
+
+    private Transform[] playerHealthHearts;
+    private Transform[] playerAmmoEggs;
+
+
     void Start()
     {
         for (int i = 0; i < axes.Length; i++) {
@@ -29,10 +43,59 @@ public class PlayerStats : MonoBehaviour
         x = 0f;
         rb = GetComponent<Rigidbody2D>();
         trans = GetComponent<Transform>();
-        airborne = false;
+        airborne = true;
+        curAmmoCount = ammoLimit;
+
+        playerHealthHearts = playerHealth.GetComponentsInChildren<Transform>();
+        playerAmmoEggs = playerAmmo.GetComponentsInChildren<Transform>();
+        curHealth = maxHealth;
     }
 
     // Update is called once per frame
+    void Update() {
+        // adding on amount of ammo.
+        if (curAmmoCount < ammoLimit) {
+            ammoDelay += Time.deltaTime;
+        }
+        if (ammoDelay > ammoTime) {
+            ammoDelay = 0;
+            if (curAmmoCount < ammoLimit) {
+                curAmmoCount++;
+            }
+        }
+        // display current ammo
+        for (int i = 1; i <= ammoLimit; i++) {
+            if (curAmmoCount >= i)
+            {
+                // this means that we should display ammo
+                playerAmmoEggs[i].gameObject.SetActive(true);
+            }
+            else {
+                playerAmmoEggs[i].gameObject.SetActive(false);
+            }
+        }
+
+        // display current health
+
+        for (int i = 1; i <= maxHealth; i++)
+        {
+            if (curHealth >= i)
+            {
+                // this means that we should display ammo
+                playerHealthHearts[i].gameObject.SetActive(true);
+            }
+            else
+            {
+                playerHealthHearts[i].gameObject.SetActive(false);
+            }
+        }
+
+        // death
+        if (curHealth <= 0) {
+            Destroy(gameObject);
+        }
+    }
+
     void FixedUpdate()
     {
         
@@ -50,10 +113,12 @@ public class PlayerStats : MonoBehaviour
             airborne = true;
         }
         reloadTime += Time.deltaTime;
-        if (reloadTime > reloadDelay && Input.GetAxisRaw(axes[2]) == 1) {
+        if (reloadTime > reloadDelay && Input.GetAxisRaw(axes[2]) == 1 && curAmmoCount > 0) {
             reloadTime = 0;
-            Instantiate(egg, eggSpawn.position, transform.rotation);
+            GameObject egg = Instantiate(eggPrefab, eggSpawn.position, transform.rotation) as GameObject;
+            egg.GetComponent<EggProjectileBehavior>().setPlayerNum(player);
             eggShot.Play();
+            curAmmoCount--;
         }
         // Debug.Log("reloadTime: " + reloadTime);
 
@@ -74,5 +139,9 @@ public class PlayerStats : MonoBehaviour
     }
     public void setAirborne(bool input) {
         airborne = input;
+    }
+
+    public void takeDamage() {
+        curHealth--;
     }
 }
