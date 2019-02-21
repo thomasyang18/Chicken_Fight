@@ -11,7 +11,6 @@ public class PlayerStats : MonoBehaviour
     private Rigidbody2D rb;
     private bool airborne;
     private Transform trans;
-    public Collider2D groundCheck;
     private float reloadTime;
     public float reloadDelay = 1f;
     public Rigidbody2D egg;
@@ -19,7 +18,7 @@ public class PlayerStats : MonoBehaviour
 
     public int player;
     private string[] axes = {"HorizontalP" , "VerticalP" , "FireP" }; // 0 is horizontal, 1 is vertical, 2 is fire.
-
+    public float maxSpeed = 10f;
     public AudioSource eggShot;
     
     void Start()
@@ -31,13 +30,18 @@ public class PlayerStats : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         trans = GetComponent<Transform>();
         airborne = false;
-        reloadTime = reloadDelay;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        
         x = Input.GetAxisRaw(axes[0]);
+
+        if (rb.velocity.magnitude > maxSpeed) {
+            rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxSpeed);
+        }
+
         rb.AddForce(Vector2.right * x * speed);
        
         float y = Input.GetAxisRaw(axes[1]);
@@ -68,12 +72,7 @@ public class PlayerStats : MonoBehaviour
     public int playerNumber() {
         return player;
     }
-    void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.tag == "Floor")
-        {
-            airborne = false;
-        }
-        //Debug.Log("We Collided");
+    public void setAirborne(bool input) {
+        airborne = input;
     }
 }
