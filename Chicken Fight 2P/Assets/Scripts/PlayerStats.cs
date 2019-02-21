@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
@@ -34,7 +35,7 @@ public class PlayerStats : MonoBehaviour
     private Transform[] playerHealthHearts;
     private Transform[] playerAmmoEggs;
 
-
+    public PlayerDeath deathCheck;
     void Start()
     {
         for (int i = 0; i < axes.Length; i++) {
@@ -92,7 +93,8 @@ public class PlayerStats : MonoBehaviour
 
         // death
         if (curHealth <= 0) {
-            Destroy(gameObject);
+            deathCheck.playerDied(player);
+            gameObject.SetActive(false);
         }
     }
 
