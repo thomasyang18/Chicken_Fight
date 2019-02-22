@@ -6,8 +6,11 @@ using UnityEngine;
 public class PlayerStats : MonoBehaviour
 {
     // Start is called before the first frame update
+    public float fallMultiplier = 2.5f;
+    public float lowJumpMultiplier = 2.5f;
+    [Range(1,10)] public float jumpForce = 1f;
+
     public float speed= 1f;
-    public float jumpForce = 1f;
     private float x;
     private Rigidbody2D rb;
     private bool airborne;
@@ -18,7 +21,7 @@ public class PlayerStats : MonoBehaviour
     public Transform eggSpawn;
 
     public int player;
-    private string[] axes = {"HorizontalP" , "VerticalP" , "FireP" }; // 0 is horizontal, 1 is vertical, 2 is fire.
+    private string[] axes = {"HorizontalP" , "JumpP" , "FireP" }; // 0 is horizontal, 1 is jump, 2 is fire.
     public float maxSpeed = 10f;
     public AudioSource eggShot;
 
@@ -36,6 +39,7 @@ public class PlayerStats : MonoBehaviour
     private Transform[] playerAmmoEggs;
 
     public PlayerDeath deathCheck;
+
     void Start()
     {
         for (int i = 0; i < axes.Length; i++) {
@@ -98,22 +102,35 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
+
     void FixedUpdate()
     {
-        
         x = Input.GetAxisRaw(axes[0]);
+        Vector2 playerMovement = Vector2.right * x * speed;
 
-        if (rb.velocity.magnitude > maxSpeed) {
+        if (rb.velocity.magnitude > maxSpeed)
+        {
             rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxSpeed);
         }
 
-        rb.AddForce(Vector2.right * x * speed);
+        if (x == 0) {
+            playerMovement = Vector2.zero;
+        }
+
+        rb.AddForce(playerMovement);
        
         float y = Input.GetAxisRaw(axes[1]);
-        if (y == 1f && airborne == false) {
-            rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
-            airborne = true;
+
+        if (rb.velocity.y < 0) {
+            rb.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime; // basically makes the fall smoother, more parabolic
         }
+        
+        if (y == 1f && airborne == false) {
+            airborne = true;
+            rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+        }
+        
+
         reloadTime += Time.deltaTime;
         if (reloadTime > reloadDelay && Input.GetAxisRaw(axes[2]) == 1 && curAmmoCount > 0) {
             reloadTime = 0;
@@ -122,6 +139,8 @@ public class PlayerStats : MonoBehaviour
             eggShot.Play();
             curAmmoCount--;
         }
+
+        
         // Debug.Log("reloadTime: " + reloadTime);
 
     }
@@ -146,4 +165,7 @@ public class PlayerStats : MonoBehaviour
     public void takeDamage() {
         curHealth--;
     }
+
+    
+
 }

@@ -238,7 +238,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 1.5
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: cbfe7eca737e4554f9c274cf297f7172, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -255,8 +255,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04ccaed05fb4a504580119c40e2849f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.45
+  fallMultiplier: 2
+  lowJumpMultiplier: 2.5
   jumpForce: 0.5
+  speed: 0.45
   reloadDelay: 1
   eggPrefab: {fileID: 5485887620747991645, guid: a526dea50e739a4409e042b54fca4c55,
     type: 3}
@@ -264,7 +266,7 @@ MonoBehaviour:
   player: 1
   maxSpeed: 9
   eggShot: {fileID: 2561360281126808865}
-  ammoTime: 5
+  ammoTime: 3
   playerHealth: {fileID: 0}
   playerAmmo: {fileID: 0}
   deathCheck: {fileID: 0}
@@ -377,8 +379,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.07243936, y: -0.07157624}
-  m_Size: {x: 0.22762814, y: 0.4654343}
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.5, y: 0.5}
   m_Direction: 0
 --- !u!1 &2561360281126808864
 GameObject:

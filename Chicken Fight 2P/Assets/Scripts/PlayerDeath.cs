@@ -6,6 +6,11 @@ using UnityEngine.SceneManagement;
 public class PlayerDeath : MonoBehaviour
 {
     // Start is called before the first frame update
+
+    // Scenes are 42 tiles large by 24 tiles tall (then cap off top).
+    // Camera size is 8.
+    //
+
     public Text winText;
     public Text restartText;
 
@@ -45,7 +50,7 @@ public class PlayerDeath : MonoBehaviour
             }
             // enable restart button
             if (Input.GetAxisRaw("Restart") == 1) {
-                SceneManager.LoadScene("_Main");
+                SceneManager.LoadScene("Grassland");
             }
         }
         else
