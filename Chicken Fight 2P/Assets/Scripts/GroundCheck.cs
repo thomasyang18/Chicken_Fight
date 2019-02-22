@@ -18,17 +18,13 @@ public class GroundCheck : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Floor")
+        if (other.gameObject.tag == "Floor" || other.gameObject.tag == "Player")
         {
             player.setAirborne(false);
         }
     }
 
-    void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "Floor")
-        {
-            player.setAirborne(true);
-        }
-    }
+    
+
+    
 }

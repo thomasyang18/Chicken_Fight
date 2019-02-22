@@ -8,7 +8,13 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Grassland.unity
     guid: 565a1cb4ded187f46ac8ccfd255fe013
+  - enabled: 1
+    path: Assets/Scenes/Grass.unity
+    guid: b34f54f8ecc392d4b8f49747e79cf82e
+  - enabled: 1
+    path: Assets/Scenes/House.unity
+    guid: 106ed60d9e3dd4248a011cec9ca10012
   m_configObjects: {}
