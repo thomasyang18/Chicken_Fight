@@ -270,6 +270,9 @@ MonoBehaviour:
   playerHealth: {fileID: 0}
   playerAmmo: {fileID: 0}
   deathCheck: {fileID: 0}
+  reloadBuff: 1.5
+  ammoFireBuff: 0.25
+  moveSpdDebuff: -0.5
 --- !u!82 &2561360280622797274
 AudioSource:
   m_ObjectHideFlags: 0

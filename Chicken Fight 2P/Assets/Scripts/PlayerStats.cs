@@ -6,6 +6,8 @@ using UnityEngine;
 public class PlayerStats : MonoBehaviour
 {
     // Start is called before the first frame update
+    public GameObject eggBasketSprite;
+
     public float fallMultiplier = 2.5f;
     public float lowJumpMultiplier = 2.5f;
     [Range(1,10)] public float jumpForce = 1f;
@@ -40,6 +42,11 @@ public class PlayerStats : MonoBehaviour
 
     public PlayerDeath deathCheck;
 
+    private bool hasEggBakset;
+
+    public float reloadBuff = 2f;
+    public float ammoFireBuff = .5f;
+    public float moveSpdDebuff = 2f;
     void Start()
     {
         for (int i = 0; i < axes.Length; i++) {
@@ -58,7 +65,10 @@ public class PlayerStats : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
+        // Debug.Log(ammoTime + " player: " + player);
         // adding on amount of ammo.
+        eggBasketSprite.SetActive(hasEggBakset);
+
         if (curAmmoCount < ammoLimit) {
             ammoDelay += Time.deltaTime;
         }
@@ -164,8 +174,26 @@ public class PlayerStats : MonoBehaviour
 
     public void takeDamage() {
         curHealth--;
+        setHasEggBasket(false);
     }
+    public void setHasEggBasket(bool i) {
+        bool orig = hasEggBakset;
+        hasEggBakset = i;
 
-    
-
+        if (hasEggBakset)
+        {
+            ammoTime -= reloadBuff;
+            maxSpeed -= moveSpdDebuff;
+            ammoDelay -= ammoFireBuff;
+        }
+        if (orig) // if it originally had an egg, now not, then add back these.
+        {
+            ammoTime += reloadBuff;
+            maxSpeed += moveSpdDebuff;
+            ammoDelay += ammoFireBuff;
+        }
+    }
+    public bool getHasEggBasket() {
+        return hasEggBakset;
+    }
 }
