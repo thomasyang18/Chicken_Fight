@@ -608,6 +608,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: EggBasket
       objectReference: {fileID: 0}
+    - target: {fileID: 4099047321381034922, guid: 58a1f1840a0a5d040b4c409b7354b269,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4099047321381034923, guid: 58a1f1840a0a5d040b4c409b7354b269,
         type: 3}
       propertyPath: m_LocalPosition.x
