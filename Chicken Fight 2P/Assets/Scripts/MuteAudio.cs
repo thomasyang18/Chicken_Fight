@@ -27,9 +27,11 @@ public class MuteAudio : MonoBehaviour
         if (a.enabled)
         {
             toggleText.text = "MUSIC: ON";
+            toggleText.color = Color.green;
         }
         else {
             toggleText.text = "MUSIC: OFF";
+            toggleText.color = Color.red;
         }
     }
 }

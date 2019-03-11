@@ -42,7 +42,7 @@ public class EggBasketBehavior : MonoBehaviour
         if (startCD) {
             cd_time += Time.deltaTime;
         }
-        Debug.Log("cd time: " + cd_time + ", cooldown: "  + cooldown + ", cd_time < cooldown: " + (cd_time < cooldown));
+        // Debug.Log("cd time: " + cd_time + ", cooldown: "  + cooldown + ", cd_time < cooldown: " + (cd_time < cooldown));
      }
 
     void OnTriggerEnter2D(Collider2D other) {
