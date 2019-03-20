@@ -23,7 +23,6 @@ public class PlayerStats : MonoBehaviour
     public int player;
     private string[] axes = {"Horizontal" , "Jump" , "Fire" }; // 0 is horizontal, 1 is jump, 2 is fire.
     public float maxSpeed = 10f;
-    public AudioSource eggShot;
 
     public float ammoTime = 2f;
     private int ammoLimit = 5;
@@ -167,7 +166,7 @@ public class PlayerStats : MonoBehaviour
             reloadTime = 0;
             GameObject egg = Instantiate(eggPrefab, eggSpawn.position, transform.rotation) as GameObject;
             egg.GetComponent<EggProjectileBehavior>().setPlayerNum(player);
-            eggShot.Play();
+            PlayerSettings.instance.eggShot();
             curAmmoCount--;
         }
     }

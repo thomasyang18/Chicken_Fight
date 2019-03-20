@@ -49,10 +49,12 @@ public class PlayerDeath : MonoBehaviour
                 winText.text = "Draw...";
             }
             // enable restart button
-            if (Input.GetAxisRaw("Restart") == 1) {
-                string[] scenes = {"Grass", "House", "Factory", "City"};
-                int load = Random.Range(0, scenes.Length);
-                SceneManager.LoadScene(scenes[load]);
+            if (Input.GetAxisRaw("Restart") == 1)
+            {
+                PlayerSettings.instance.levelGen();
+            }
+            else if (Input.GetAxisRaw("Exit") == 1) {
+                SceneManager.LoadScene("Menu");
             }
         }
         else

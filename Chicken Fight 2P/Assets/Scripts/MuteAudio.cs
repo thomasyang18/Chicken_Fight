@@ -9,15 +9,21 @@ public class MuteAudio : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        a = GetComponent<AudioSource>();
+        a = PlayerSettings.instance.BGM;
         UpdateText();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Mute")) {
-            a.enabled = !a.enabled;
+        if (Input.GetButtonDown("Mute"))
+        {
+            if (a.enabled) a.enabled = false;
+            else
+            {
+                a.enabled = true;
+                a.Play();
+            }
         }
         UpdateText();
     }

@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class EggBasketBehavior : MonoBehaviour
 {
+    public static EggBasketBehavior instance = null;
+
     // Start is called before the first frame update
     private PlayerStats curPlayer;
     private SpriteRenderer sprite;
@@ -16,6 +18,8 @@ public class EggBasketBehavior : MonoBehaviour
     private int curNumber = -1;
     void Start()
     {
+        if (instance == null) instance = this;
+        else if (instance != this) Destroy(gameObject);
         trans = GetComponent<Transform>();
         trigger = GetComponent<Collider2D>();
         sprite = GetComponent<SpriteRenderer>();
