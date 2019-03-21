@@ -58,6 +58,14 @@ public class CameraBehavior : MonoBehaviour
 
     void LateUpdate()
     {
-        AdjustCameraSize();
+        if (!PlayerSettings.instance.camLock)
+        {
+            AdjustCameraSize();
+        }
+        else
+        {
+            mainCam.orthographicSize = 8;
+            mainCam.transform.position = Vector3.zero;
+        }
     }
 }

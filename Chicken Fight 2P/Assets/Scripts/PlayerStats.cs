@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // this class is basically player behavior, badly named
     public GameObject eggBasketSprite;
     private Rigidbody2D rb;
     [SerializeField] private float jumpPower= 1f;

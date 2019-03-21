@@ -7,7 +7,6 @@ public class EggBasketBehavior : MonoBehaviour
 {
     public static EggBasketBehavior instance = null;
 
-    // Start is called before the first frame update
     private PlayerStats curPlayer;
     private SpriteRenderer sprite;
     private Collider2D trigger;
@@ -16,6 +15,7 @@ public class EggBasketBehavior : MonoBehaviour
     public float cooldown = 2f;
     private bool startCD;
     private int curNumber = -1;
+    private Transform origPos;
     void Start()
     {
         if (instance == null) instance = this;
@@ -24,15 +24,15 @@ public class EggBasketBehavior : MonoBehaviour
         trigger = GetComponent<Collider2D>();
         sprite = GetComponent<SpriteRenderer>();
         cd_time = cooldown;
+        origPos = trans;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (curPlayer != null) {
             if (!curPlayer.getHasEggBasket())
             {
-                trans.position = curPlayer.GetComponent<Transform>().position;
+                trans.position = origPos.position;
                 curPlayer = null;
                 sprite.enabled = true;
                 trigger.enabled = true;

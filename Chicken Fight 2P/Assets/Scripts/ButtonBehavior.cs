@@ -35,4 +35,11 @@ public class ButtonBehavior : MonoBehaviour
     public void playGame() {
         PlayerSettings.instance.initGame();
     }
+
+    public void flipRandom() {
+        PlayerSettings.instance.flipRandom();
+    }
+    public void flipCamLock() {
+        PlayerSettings.instance.flipCameraLock();
+    }
 }
